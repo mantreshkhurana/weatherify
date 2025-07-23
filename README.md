@@ -43,16 +43,16 @@ Weatherify is a sleek, fast, and reliable weather application that delivers real
 ## Releases
 
 Demos:
-1, [Andoid APK](https://github.com/mantreshkhurana/weatherify/releases/download/1.0.0/weatherify-v1.0.0-1.apk)
-1, [Web Demo](https://weatheprojects.mantreshkhurana.com/weatherify/)
 
+1. [Andoid APK](https://github.com/mantreshkhurana/weatherify/releases/download/1.0.0/weatherify-v1.0.0-1.apk)
+2. [Web Demo](https://weatheprojects.mantreshkhurana.com/weatherify/)
 
 Checkout the latest releases of Weatherify:
 [Releases](https://github.com/mantreshkhurana/weatherify/releases)
 
 | Version | Date       | Description                          |
 |---------|------------|--------------------------------------|
-| [1.0.0](https://github.com/mantreshkhurana/show_fps/releases/tag/1.0.0)   | 23.07.2025 | Initial release with core features |
+| [1.0.0](https://github.com/mantreshkhurana/weatherify/releases/tag/1.0.0)   | 23.07.2025 | Initial release with core features |
 
 ## Platforms Supported
 
