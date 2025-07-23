@@ -16,6 +16,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   WeatherModel? _weather;
   bool _isLoading = true;
+  bool _isCelsius = true;
 
   @override
   void initState() {
@@ -42,14 +43,41 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:
+      body: Stack(
+        children: [
           _isLoading
               ? const LoadingWidget()
               : WeatherDisplay(
                 condition: _weather!.condition,
                 temperature: _weather!.temperature,
                 cityName: _weather!.cityName,
+                isCelsius: _isCelsius,
               ),
+          Positioned(
+            right: 15,
+            top: 15,
+            child: Row(
+              children: [
+                const Text('°C', style: TextStyle(fontSize: 16)),
+                Switch(
+                  activeColor: Colors.black,
+                  inactiveThumbColor: Colors.black,
+                  inactiveTrackColor: Colors.grey,
+                  activeTrackColor: Colors.grey,
+                  value: !_isCelsius,
+                  onChanged: (value) {
+                    setState(() {
+                      _isCelsius = !value;
+                    });
+                  },
+                ),
+                const Text('°F', style: TextStyle(fontSize: 16)),
+                const SizedBox(width: 15),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

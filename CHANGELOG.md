@@ -1,0 +1,2 @@
+- [x] **`°C/°F` Toggle**
+- [x] **New Loading Indicator**

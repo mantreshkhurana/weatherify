@@ -14,6 +14,7 @@ dependencies:
   http: ^1.4.0
   weather_animation: ^1.1.2
   flutter_dotenv: ^5.2.1
+  loading_indicator: ^3.1.1
 
 dev_dependencies:
   flutter_test:

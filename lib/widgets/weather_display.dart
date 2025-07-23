@@ -5,12 +5,14 @@ class WeatherDisplay extends StatelessWidget {
   final String condition;
   final double temperature;
   final String cityName;
+  final bool isCelsius;
 
   const WeatherDisplay({
     super.key,
     required this.condition,
     required this.temperature,
     required this.cityName,
+    required this.isCelsius,
   });
 
   WeatherScene _getScene(String condition) {
@@ -26,6 +28,15 @@ class WeatherDisplay extends StatelessWidget {
       case 'clear':
       default:
         return WeatherScene.sunset;
+    }
+  }
+
+  String _formatTemperature(double temp) {
+    if (isCelsius) {
+      return '${temp.toStringAsFixed(1)}°C';
+    } else {
+      final fahrenheit = (temp * 9 / 5) + 32;
+      return '${fahrenheit.toStringAsFixed(1)}°F';
     }
   }
 
@@ -50,7 +61,7 @@ class WeatherDisplay extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                '$condition | ${temperature.toStringAsFixed(1)}°C',
+                '$condition | ${_formatTemperature(temperature)}',
                 style: const TextStyle(
                   fontSize: 22,
                   color: Colors.white,
