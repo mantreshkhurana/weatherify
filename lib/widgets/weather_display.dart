@@ -1,9 +1,13 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:weather_animation/weather_animation.dart';
 
 class WeatherDisplay extends StatelessWidget {
   final String condition;
   final double temperature;
+  final double feelsLike;
+  final double tempMin;
+  final double tempMax;
   final String cityName;
   final bool isCelsius;
 
@@ -11,33 +15,80 @@ class WeatherDisplay extends StatelessWidget {
     super.key,
     required this.condition,
     required this.temperature,
+    required this.feelsLike,
+    required this.tempMin,
+    required this.tempMax,
     required this.cityName,
     required this.isCelsius,
   });
 
   WeatherScene _getScene(String condition) {
-    switch (condition.toLowerCase()) {
-      case 'rain':
-        return WeatherScene.rainyOvercast;
-      case 'snow':
-        return WeatherScene.snowfall;
-      case 'clouds':
-        return WeatherScene.weatherEvery;
-      case 'thunderstorm':
-        return WeatherScene.stormy;
-      case 'clear':
-      default:
-        return WeatherScene.sunset;
+    final lc = condition.toLowerCase();
+    if (lc.contains('rain') || lc.contains('drizzle')) {
+      return WeatherScene.rainyOvercast;
+    } else if (lc.contains('snow')) {
+      return WeatherScene.snowfall;
+    } else if (lc.contains('cloud')) {
+      return WeatherScene.weatherEvery;
+    } else if (lc.contains('storm') || lc.contains('thunder')) {
+      return WeatherScene.stormy;
+    } else {
+      return WeatherScene.sunset;
     }
   }
 
-  String _formatTemperature(double temp) {
+  String _format(double temp) {
     if (isCelsius) {
       return '${temp.toStringAsFixed(1)}°C';
     } else {
-      final fahrenheit = (temp * 9 / 5) + 32;
-      return '${fahrenheit.toStringAsFixed(1)}°F';
+      final f = (temp * 9 / 5) + 32;
+      return '${f.toStringAsFixed(1)}°F';
     }
+  }
+
+  Widget _buildGlassInfo({
+    required IconData icon,
+    required String label,
+    required String value,
+  }) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(20),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+        child: Container(
+          width: 100,
+          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 10),
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.15),
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: Colors.white.withOpacity(0.2)),
+          ),
+          child: Column(
+            children: [
+              Icon(icon, color: Colors.white, size: 24),
+              const SizedBox(height: 6),
+              Text(
+                label,
+                style: const TextStyle(
+                  fontSize: 14,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                value,
+                style: const TextStyle(
+                  fontSize: 16,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   @override
@@ -61,12 +112,35 @@ class WeatherDisplay extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                '$condition | ${_formatTemperature(temperature)}',
+                '$condition | ${_format(temperature)}',
                 style: const TextStyle(
                   fontSize: 22,
                   color: Colors.white,
                   shadows: [Shadow(blurRadius: 5, color: Colors.black)],
                 ),
+              ),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _buildGlassInfo(
+                    icon: Icons.thermostat_outlined,
+                    label: 'Feels like',
+                    value: _format(feelsLike),
+                  ),
+                  const SizedBox(width: 12),
+                  _buildGlassInfo(
+                    icon: Icons.arrow_upward,
+                    label: 'High',
+                    value: _format(tempMax),
+                  ),
+                  const SizedBox(width: 12),
+                  _buildGlassInfo(
+                    icon: Icons.arrow_downward,
+                    label: 'Low',
+                    value: _format(tempMin),
+                  ),
+                ],
               ),
             ],
           ),

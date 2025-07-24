@@ -50,6 +50,9 @@ class _HomeScreenState extends State<HomeScreen> {
               : WeatherDisplay(
                 condition: _weather!.condition,
                 temperature: _weather!.temperature,
+                feelsLike: _weather!.feelsLike,
+                tempMin: _weather!.tempMin,
+                tempMax: _weather!.tempMax,
                 cityName: _weather!.cityName,
                 isCelsius: _isCelsius,
               ),
