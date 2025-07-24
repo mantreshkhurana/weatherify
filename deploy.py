@@ -7,9 +7,6 @@ if agree == "y":
     os.system("flutter pub get")
     os.system("flutter build web --release")
     os.system("firebase deploy")
-    os.system("git add .")
-    os.system("git commit -m 'Update'")
-    os.system("git push origin dev")
     print("Deployed!")
 else:
     print("Canceled!")
