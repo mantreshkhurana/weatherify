@@ -37,49 +37,66 @@ class _HomeScreenState extends State<HomeScreen> {
       });
     } catch (e) {
       handleError(e);
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          _isLoading
-              ? const LoadingWidget()
-              : WeatherDisplay(
-                condition: _weather!.condition,
-                temperature: _weather!.temperature,
-                feelsLike: _weather!.feelsLike,
-                tempMin: _weather!.tempMin,
-                tempMax: _weather!.tempMax,
-                cityName: _weather!.cityName,
-                isCelsius: _isCelsius,
-              ),
-          Positioned(
-            right: 15,
-            top: 15,
-            child: Row(
-              children: [
-                const Text('°C', style: TextStyle(fontSize: 16)),
-                Switch(
-                  activeColor: Colors.black,
-                  inactiveThumbColor: Colors.black,
-                  inactiveTrackColor: Colors.grey,
-                  activeTrackColor: Colors.grey,
-                  value: !_isCelsius,
-                  onChanged: (value) {
-                    setState(() {
-                      _isCelsius = !value;
-                    });
-                  },
+    return SafeArea(
+      child: Scaffold(
+        body: Stack(
+          children: [
+            _isLoading
+                ? const LoadingWidget()
+                : _weather == null
+                ? const Center(
+                  child: Text(
+                    'Unable to load weather data.',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                )
+                : WeatherDisplay(
+                  condition: _weather!.condition,
+                  temperature: _weather!.temperature,
+                  feelsLike: _weather!.feelsLike,
+                  tempMin: _weather!.tempMin,
+                  tempMax: _weather!.tempMax,
+                  humidity: _weather!.humidity,
+                  precipitation: _weather!.precipitation,
+                  windSpeed: _weather!.windSpeed,
+                  sunrise: _weather!.sunrise,
+                  sunset: _weather!.sunset,
+                  cityName: _weather!.cityName,
+                  isCelsius: _isCelsius,
                 ),
-                const Text('°F', style: TextStyle(fontSize: 16)),
-                const SizedBox(width: 15),
-              ],
+            Positioned(
+              right: 15,
+              top: 15,
+              child: Row(
+                children: [
+                  const Text('°C', style: TextStyle(fontSize: 16)),
+                  Switch(
+                    activeColor: Colors.black,
+                    inactiveThumbColor: Colors.black,
+                    inactiveTrackColor: Colors.grey,
+                    activeTrackColor: Colors.grey,
+                    value: !_isCelsius,
+                    onChanged: (value) {
+                      setState(() {
+                        _isCelsius = !value;
+                      });
+                    },
+                  ),
+                  const Text('°F', style: TextStyle(fontSize: 16)),
+                  const SizedBox(width: 15),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -53,6 +53,8 @@ Checkout the latest releases of Weatherify:
 | Version | Date       | Description                          |
 |---------|------------|--------------------------------------|
 | [1.0.0](https://github.com/mantreshkhurana/weatherify/releases/tag/1.0.0)   | 23.07.2025 | Initial release with core features |
+| [1.0.0](https://github.com/mantreshkhurana/weatherify/releases/tag/1.0.1)   | 24.07.2025 | Web Release |
+| [1.0.0](https://github.com/mantreshkhurana/weatherify/releases/tag/1.0.2)   | 24.07.2025 | Core Features Updated |
 
 ## Platforms Supported
 

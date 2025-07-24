@@ -8,6 +8,11 @@ class WeatherDisplay extends StatelessWidget {
   final double feelsLike;
   final double tempMin;
   final double tempMax;
+  final int humidity;
+  final double? precipitation;
+  final double windSpeed;
+  final DateTime sunrise;
+  final DateTime sunset;
   final String cityName;
   final bool isCelsius;
 
@@ -18,6 +23,11 @@ class WeatherDisplay extends StatelessWidget {
     required this.feelsLike,
     required this.tempMin,
     required this.tempMax,
+    required this.humidity,
+    required this.precipitation,
+    required this.windSpeed,
+    required this.sunrise,
+    required this.sunset,
     required this.cityName,
     required this.isCelsius,
   });
@@ -44,6 +54,13 @@ class WeatherDisplay extends StatelessWidget {
       final f = (temp * 9 / 5) + 32;
       return '${f.toStringAsFixed(1)}°F';
     }
+  }
+
+  String _formatTime(DateTime time) {
+    final hour = time.hour % 12 == 0 ? 12 : time.hour % 12;
+    final minute = time.minute.toString().padLeft(2, '0');
+    final period = time.hour >= 12 ? 'PM' : 'AM';
+    return '$hour:$minute $period';
   }
 
   Widget _buildGlassInfo({
@@ -120,6 +137,8 @@ class WeatherDisplay extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
+
+              /// First row: Feels Like, High, Low
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -139,6 +158,55 @@ class WeatherDisplay extends StatelessWidget {
                     icon: Icons.arrow_downward,
                     label: 'Low',
                     value: _format(tempMin),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 12),
+
+              /// Second row: Humidity, Precip, Wind
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _buildGlassInfo(
+                    icon: Icons.water_drop,
+                    label: 'Humidity',
+                    value: '$humidity%',
+                  ),
+                  const SizedBox(width: 12),
+                  _buildGlassInfo(
+                    icon: Icons.water_drop_rounded,
+                    label: 'Rain',
+                    value:
+                        precipitation != null
+                            ? '${precipitation!.toStringAsFixed(1)} mm'
+                            : '0 mm',
+                  ),
+                  const SizedBox(width: 12),
+                  _buildGlassInfo(
+                    icon: Icons.air,
+                    label: 'Wind',
+                    value: '${windSpeed.toStringAsFixed(1)} m/s',
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 12),
+
+              /// Third row: Sunrise, Sunset
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _buildGlassInfo(
+                    icon: Icons.wb_sunny_outlined,
+                    label: 'Sunrise',
+                    value: _formatTime(sunrise),
+                  ),
+                  const SizedBox(width: 12),
+                  _buildGlassInfo(
+                    icon: Icons.nightlight_round,
+                    label: 'Sunset',
+                    value: _formatTime(sunset),
                   ),
                 ],
               ),
