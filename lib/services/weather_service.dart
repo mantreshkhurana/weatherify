@@ -11,16 +11,29 @@ class WeatherService {
         kIsWeb
             ? "ef719e15621dacfbf900726c3c8ec6b0"
             : dotenv.env['OPEN_WEATHER_API_KEY'];
-    final url = Uri.parse(
-      '$baseUrl?lat=$lat&lon=$lon&units=metric&appid=$apiKey',
+
+    final weatherUrl = Uri.parse(
+      '$baseUrl/weather?lat=$lat&lon=$lon&units=metric&appid=$apiKey',
     );
 
-    final response = await http.get(url);
-    if (response.statusCode != 200) {
-      throw Exception('Failed to load weather');
+    final aqiUrl = Uri.parse(
+      '$baseUrl/air_pollution?lat=$lat&lon=$lon&appid=$apiKey',
+    );
+
+    final weatherResponse = await http.get(weatherUrl);
+    final aqiResponse = await http.get(aqiUrl);
+
+    if (weatherResponse.statusCode != 200) {
+      throw Exception('Failed to load weather data');
     }
 
-    final jsonData = json.decode(response.body);
-    return WeatherModel.fromJson(jsonData);
+    if (aqiResponse.statusCode != 200) {
+      throw Exception('Failed to load AQI data');
+    }
+
+    final weatherJson = json.decode(weatherResponse.body);
+    final aqiJson = json.decode(aqiResponse.body);
+
+    return WeatherModel.fromJson(weatherJson, aqiJson);
   }
 }

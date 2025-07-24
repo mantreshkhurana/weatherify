@@ -49,9 +49,17 @@ class _HomeScreenState extends State<HomeScreen> {
               ? const LoadingWidget()
               : WeatherDisplay(
                 condition: _weather!.condition,
-                temperature: _weather!.temperature,
+                description: _weather!.description,
                 cityName: _weather!.cityName,
+                temperature: _weather!.temperature,
+                tempMax: _weather!.tempMax,
+                tempMin: _weather!.tempMin,
                 isCelsius: _isCelsius,
+                humidity: _weather!.humidity,
+                windSpeed: _weather!.windSpeed,
+                sunrise: _weather!.sunrise,
+                sunset: _weather!.sunset,
+                aqi: _weather!.aqi,
               ),
           Positioned(
             right: 15,
