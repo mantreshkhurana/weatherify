@@ -46,6 +46,8 @@ Demos:
 
 1. [Download Andoid APK v1.0.2](https://github.com/mantreshkhurana/weatherify/releases/download/1.0.2/weatherify-v1.0.2-3.apk)
 2. [Web Demo](https://weatherify.in)
+> if this web demo doesn't work try:
+> [Web Demo 2](https://weatherify-mantresh.web.app)
 
 Checkout the latest releases of Weatherify:
 [Releases](https://github.com/mantreshkhurana/weatherify/releases)
@@ -108,6 +110,15 @@ Get your API key from [OpenWeather](https://openweathermap.org/api).
 
 ```.env
 OPEN_WEATHER_API_KEY="your_actual_api_key_here"
+```
+
+add "OPEN_WEATHER_API_KEY" to [weather_service.dart](lib/services/weather_service.dart) file to run it on a static server. on line 10, replace the placeholder with your actual API key:
+
+```dart
+final apiKey =
+        kIsWeb
+            ? "your_actual_api_key_here"
+            : dotenv.env['OPEN_WEATHER_API_KEY'];
 ```
 
 Note: Never commit your .env file to version control. Add .env to your .gitignore.
