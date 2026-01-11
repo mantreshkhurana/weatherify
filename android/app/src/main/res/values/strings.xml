@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="widget_small_name">Weather Small</string>
+    <string name="widget_medium_name">Weather</string>
+    <string name="widget_small_description">Compact weather widget showing temperature and city</string>
+    <string name="widget_medium_description">Weather widget with temperature, conditions, and details</string>
+</resources>

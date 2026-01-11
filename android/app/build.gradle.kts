@@ -16,7 +16,7 @@ plugins {
 
 android {
     namespace = "com.mantresh.weatherify"
-    compileSdk = 35
+    compileSdk = 36
     ndkVersion = "27.0.12077973"
 
 
@@ -61,4 +61,11 @@ signingConfigs {
 
 flutter {
     source = "../.."
+}
+
+dependencies {
+    implementation("androidx.work:work-runtime-ktx:2.9.0")
+    implementation("com.google.code.gson:gson:2.10.1")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("com.google.android.gms:play-services-location:21.3.0")
 }

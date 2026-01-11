@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../services/location_service.dart';
 import '../services/weather_service.dart';
+import '../services/widget_service.dart';
 import '../models/weather_model.dart';
 import '../widgets/weather_display.dart';
 import '../widgets/loading_widget.dart';
@@ -35,6 +36,13 @@ class _HomeScreenState extends State<HomeScreen> {
         _weather = weather;
         _isLoading = false;
       });
+
+      // Update home screen widget data
+      await WidgetService.updateWidgetData(weather);
+      await WidgetService.saveLastLocation(
+        position.latitude,
+        position.longitude,
+      );
     } catch (e) {
       handleError(e);
       setState(() {
