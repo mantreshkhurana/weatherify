@@ -7,10 +7,7 @@ import '../core/constants.dart';
 
 class WeatherService {
   Future<WeatherModel> getWeather(double lat, double lon) async {
-    final apiKey =
-        kIsWeb
-            ? "ef719e15621dacfbf900726c3c8ec6b0"
-            : dotenv.env['OPEN_WEATHER_API_KEY'];
+    final apiKey = dotenv.env['OPEN_WEATHER_API_KEY'];
     final url = Uri.parse(
       '$baseUrl?lat=$lat&lon=$lon&units=metric&appid=$apiKey',
     );
